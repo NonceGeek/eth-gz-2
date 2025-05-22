@@ -57,5 +57,9 @@
   },
   "engines": {
     "node": ">=20.18.3"
+  },
+  "dependencies": {
+    "react-markdown": "^10.1.0",
+    "vercel": "^41.7.6"
   }
 }

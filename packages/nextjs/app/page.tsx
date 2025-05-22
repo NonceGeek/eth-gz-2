@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import type { NextPage } from "next";
 // import { useAccount } from "wagmi";
 // import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -9,8 +8,6 @@ import { useState } from "react";
 
 const Home: NextPage = () => {
   // const { address: connectedAddress } = useAccount();
-
-  const [showContact, setShowContact] = useState(false);
 
   const youtubeVideos = [
     {
@@ -34,6 +31,48 @@ const Home: NextPage = () => {
       title: "Smart Contracts - ETH.BUILD",
     },
   ];
+
+  // Whitepaper as raw markdown string
+  const whitePaperMarkdown = `## ETH GuangZhou 对于大湾区的 Buidlers 的意义
+
+在地缘学上，广州有非常重要的地位，是**「粤港澳大湾区」**的核心城市之一，即连接香港，又联通深圳。
+
+同时，有多所高校坐落在广州，例如中山大学、华南理工大学、华南农业大学、广州大学等等等等。
+
+广州、深圳、香港高校都有大量 Web3 爱好者，也有区块链协会，但是 **目前较为零散，尚未被有效的组织在一起**。
+
+因此，建立 ETH GuangZhou，将组织的核心设定为**「用户导向的有效生产」**，对于广州本地的甚至整个大湾区的 ETH Buidlers 的学习与交流，都意义重大。
+
+## ETH GuangZhou 对于 ETH 的意义
+
+虽然现在在中国不同的区域已经存在多个 \`ETH *\`，例如 ETH-BeiJing、ETH-HangZhou……但是，目前尚未有专注在**「用户导向的有效生产」**这个内核的 ETH 分区。
+
+**什么是专注在「用户导向的有效生产」**？
+
+聚焦在 Infra 和 Geek Idea 的 Hackathon 和活动已经够多了，这些固然很好，但我们想看到的是 —— **Web3 技术是如何触达最终的 C 端用户的**。
+
+因此，让我们 Hodl ETH-GuangZhou，Hodl 基于「用户导向的有效生产」的 Workshops、Hodl 基于「用户导向的有效产品」的 Hackathon，挖掘 ETH 的全新可能 🌹🌹🌹。`;
+
+  // Simple function to convert markdown to HTML
+  const convertMarkdownToHtml = (markdown: string) => {
+    return markdown
+      // Convert headers
+      .replace(/^# (.*$)/gm, '<h1 class="text-3xl font-bold mb-4">$1</h1>')
+      .replace(/^## (.*$)/gm, '<center><h2 class="text-2xl font-bold mt-6 mb-4">$1</h2></center>')
+      // Convert bold text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      // Convert code
+      .replace(/`(.*?)`/g, '<code class="bg-gray-700 px-1 rounded">$1</code>')
+      // Convert paragraphs
+      .split('\n\n')
+      .map(paragraph => {
+        if (paragraph.startsWith('<h1') || paragraph.startsWith('<h2')) {
+          return paragraph;
+        }
+        return `<p class="my-3">${paragraph}</p>`;
+      })
+      .join('');
+  };
 
   return (
     <>
@@ -98,14 +137,17 @@ const Home: NextPage = () => {
               </pre>
           </div>
         </div>
-        <div className="px-5">
-          <br></br>
-          <h2 className="text-center">
+        <div className="px-5 my-16">
+          <h2 className="text-center mb-8">
             <span className="block text-4xl font-bold">Whitepaper</span>
           </h2>
-          <br></br>
-          <p>0x0000000000000000000000000000000000000000</p>
-          {/* TODO: impl a whitepaper here.*/}
+          
+          <div className="max-w-3xl mx-auto bg-base-200 p-8 rounded-xl">
+            <div 
+              className="prose prose-lg max-w-none"
+              dangerouslySetInnerHTML={{ __html: convertMarkdownToHtml(whitePaperMarkdown) }}
+            />
+          </div>
         </div>
 
         <div className="grow bg-base-300 w-full mt-16 px-8 py-12">
@@ -114,6 +156,16 @@ const Home: NextPage = () => {
           </h2>
           <br></br>
           <VideoSlideshow videos={youtubeVideos} />
+        </div>
+
+        <div className="px-5">
+          <br></br>
+          <h2 className="text-center">
+            <span className="block text-4xl font-bold">Relāted Pr0jects</span>
+          </h2>
+          <br></br>
+          <p>0x0000000000000000000000000000000000000000</p>
+          {/* TODO: impl the related projects.*/}
         </div>
 
         <div className="px-5">
